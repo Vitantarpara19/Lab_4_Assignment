@@ -4,7 +4,6 @@
  */
 package ui;
 
-import java.awt.CardLayout;
 import java.awt.Image;
 import java.io.File;
 import java.util.regex.Matcher;
@@ -12,7 +11,6 @@ import java.util.regex.Pattern;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import model.User;
 
@@ -20,15 +18,16 @@ import model.User;
  *
  * @author Lenovo
  */
-public class FormPanel extends javax.swing.JPanel {
+public class ViewPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form FormPanel
      */
-    private JPanel bottomPanel;
-    public FormPanel(JPanel inputPanel) {
+    private User newUser;
+    public ViewPanel(User newUser) {
         initComponents();
-        this.bottomPanel = inputPanel;
+        this.newUser = newUser;
+        populateData();
     }
 
     /**
@@ -59,7 +58,6 @@ public class FormPanel extends javax.swing.JPanel {
         typeComboBox = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         messageTextField = new javax.swing.JTextField();
-        submitButton = new javax.swing.JButton();
         uploadImageLabel = new javax.swing.JLabel();
         browseImageButton = new javax.swing.JButton();
         imageLabel = new javax.swing.JLabel();
@@ -76,7 +74,7 @@ public class FormPanel extends javax.swing.JPanel {
         titleOfPage.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         titleOfPage.setForeground(new java.awt.Color(255, 255, 255));
         titleOfPage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleOfPage.setText("Customer Registration Form");
+        titleOfPage.setText("View Panel");
 
         firstNameLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         firstNameLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -183,16 +181,6 @@ public class FormPanel extends javax.swing.JPanel {
             }
         });
 
-        submitButton.setBackground(new java.awt.Color(255, 255, 255));
-        submitButton.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        submitButton.setForeground(new java.awt.Color(0, 102, 102));
-        submitButton.setText("Submit");
-        submitButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                submitButtonActionPerformed(evt);
-            }
-        });
-
         uploadImageLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         uploadImageLabel.setForeground(new java.awt.Color(255, 255, 255));
         uploadImageLabel.setText("Upload Image");
@@ -238,7 +226,6 @@ public class FormPanel extends javax.swing.JPanel {
                     .addComponent(uploadImageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(submitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(firstNameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
                     .addComponent(lastNameTextField)
                     .addComponent(ageTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
@@ -322,9 +309,7 @@ public class FormPanel extends javax.swing.JPanel {
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(messageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(submitButton)
-                .addGap(25, 25, 25))
+                .addGap(66, 66, 66))
             .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(mainPanelLayout.createSequentialGroup()
                     .addGap(195, 195, 195)
@@ -430,51 +415,6 @@ public class FormPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_messageTextFieldActionPerformed
 
-    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-        // TODO add your handling code here:
-        User newUser = new User();
-        newUser.setFirstname(firstNameTextField.getText());
-        newUser.setLastname(lastNameTextField.getText());
-        newUser.setAge(ageTextField.getText());
-        newUser.setEmail(emailIdTextField.getText());
-        newUser.setGender(genderGroup.getSelection().getActionCommand());
-        newUser.setType(typeComboBox.getSelectedItem().toString());
-        newUser.setMessage(messageTextField.getText());
-        
-        ViewPanel newViewPanel = new ViewPanel(newUser);
-        bottomPanel.add(newViewPanel);
-        CardLayout layout = (CardLayout) bottomPanel.getLayout();
-        layout.next(bottomPanel);
-        
-        //String firstname = firstNameTextField.getText();
-        //String lastname = lastNameTextField.getText();
-        //String age = ageTextField.getText();
-        //String email = emailIdTextField.getText();
-        //String gender = genderGroup.getSelection().getActionCommand();
-        //String type = typeComboBox.getSelectedItem().toString();
-        //String message = messageTextField.getText(); 
-
-//        if (firstname.equals("")) {
-//            JOptionPane.showMessageDialog(null, "First name is required");
-//        }
-//        if (lastname.equals("")) {
-//            JOptionPane.showMessageDialog(null, "Last name is required");
-//        }
-//        if (age.equals("")) {
-//            JOptionPane.showMessageDialog(null, "Age is required");
-//        }
-//        if (email.equals("")) {
-//            JOptionPane.showMessageDialog(null, "Email Id is required");
-//        }
-//        if (message.equals("")) {
-//            JOptionPane.showMessageDialog(null, "Message is required");
-//        }
-
-        //JOptionPane.showMessageDialog(this, firstname + "\n" + lastname + "\n" + age + "\n" + email + "\n" + gender + "\n" + type + "\n" + message, "User Details", HEIGHT);
-
-        //System.out.println(firstname + " " + lastname + " " + age + " " + email + " " + gender + " " + type + " " + message);
-    }//GEN-LAST:event_submitButtonActionPerformed
-
     private void browseImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseImageButtonActionPerformed
         // TODO add your handling code here:
         JFileChooser browseImageFile = new JFileChooser();
@@ -521,9 +461,12 @@ private javax.swing.ButtonGroup genderGroup;
     private javax.swing.JRadioButton maleRadioB;
     private javax.swing.JTextField messageTextField;
     private javax.swing.JRadioButton preferNotToSayRadioB;
-    private javax.swing.JButton submitButton;
     private javax.swing.JLabel titleOfPage;
     private javax.swing.JComboBox<String> typeComboBox;
     private javax.swing.JLabel uploadImageLabel;
     // End of variables declaration//GEN-END:variables
+
+    private void populateData() {
+        firstNameTextField.setText(this.newUser.getFirstname());
+    }
 }
