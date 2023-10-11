@@ -16,6 +16,9 @@ public class User {
         String gender;
         String type;
         String message;
+        String path;
+        String dob;
+        String Filename;
 
     public String getFirstname() {
         return firstname;
@@ -72,6 +75,20 @@ public class User {
     public void setMessage(String message) {
         this.message = message;
     }
-        
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }    
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }     
         
 }

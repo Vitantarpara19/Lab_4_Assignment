@@ -5,13 +5,12 @@
 package ui;
 
 import java.awt.CardLayout;
-import java.awt.Image;
 import java.io.File;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import model.User;
@@ -26,6 +25,7 @@ public class FormPanel extends javax.swing.JPanel {
      * Creates new form FormPanel
      */
     private JPanel bottomPanel;
+
     public FormPanel(JPanel inputPanel) {
         initComponents();
         this.bottomPanel = inputPanel;
@@ -41,6 +41,7 @@ public class FormPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         javax.swing.ButtonGroup genderGroup = new javax.swing.ButtonGroup();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         mainPanel = new javax.swing.JPanel();
         titleOfPage = new javax.swing.JLabel();
         firstNameLabel = new javax.swing.JLabel();
@@ -68,6 +69,8 @@ public class FormPanel extends javax.swing.JPanel {
         lLabel = new javax.swing.JLabel();
         eLabel1 = new javax.swing.JLabel();
         agLable = new javax.swing.JLabel();
+        dobLable = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         mainPanel.setBackground(new java.awt.Color(0, 51, 51));
         mainPanel.setForeground(new java.awt.Color(0, 153, 0));
@@ -146,18 +149,18 @@ public class FormPanel extends javax.swing.JPanel {
             }
         });
 
-        genderGroup.add(maleRadioB);
+        buttonGroup1.add(maleRadioB);
         maleRadioB.setForeground(new java.awt.Color(255, 255, 255));
         maleRadioB.setSelected(true);
         maleRadioB.setText("Male");
         maleRadioB.setActionCommand("Male User");
 
-        genderGroup.add(femaleRadioB);
+        buttonGroup1.add(femaleRadioB);
         femaleRadioB.setForeground(new java.awt.Color(255, 255, 255));
         femaleRadioB.setText("Female");
         femaleRadioB.setActionCommand("Female User");
 
-        genderGroup.add(preferNotToSayRadioB);
+        buttonGroup1.add(preferNotToSayRadioB);
         preferNotToSayRadioB.setForeground(new java.awt.Color(255, 255, 255));
         preferNotToSayRadioB.setText("Prefer Not To Say");
         preferNotToSayRadioB.setActionCommand("Prefer not to say");
@@ -219,6 +222,10 @@ public class FormPanel extends javax.swing.JPanel {
         agLable.setFont(new java.awt.Font("Dialog", 2, 12)); // NOI18N
         agLable.setForeground(new java.awt.Color(255, 0, 0));
 
+        dobLable.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        dobLable.setForeground(new java.awt.Color(255, 255, 255));
+        dobLable.setText("Choose Date Below");
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
@@ -239,10 +246,10 @@ public class FormPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(submitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(firstNameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
+                    .addComponent(firstNameTextField)
                     .addComponent(lastNameTextField)
-                    .addComponent(ageTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
-                    .addComponent(emailIdTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
+                    .addComponent(ageTextField)
+                    .addComponent(emailIdTextField)
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addComponent(maleRadioB, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -254,7 +261,13 @@ public class FormPanel extends javax.swing.JPanel {
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(browseImageButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(typeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(36, 36, 36)
+                        .addGap(70, 70, 70)
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(mainPanelLayout.createSequentialGroup()
+                                .addComponent(dobLable, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 64, Short.MAX_VALUE))
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -304,21 +317,23 @@ public class FormPanel extends javax.swing.JPanel {
                     .addComponent(maleRadioB)
                     .addComponent(femaleRadioB)
                     .addComponent(preferNotToSayRadioB))
+                .addGap(18, 18, 18)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(typeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(typeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dobLable))
                         .addGap(18, 18, 18)
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(uploadImageLabel)
-                            .addComponent(browseImageButton))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
-                        .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                            .addComponent(browseImageButton)
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(messageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
@@ -350,7 +365,7 @@ public class FormPanel extends javax.swing.JPanel {
 
     private void lastNameTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lastNameTextFieldKeyReleased
         // TODO add your handling code here:
-        String PATTERN = "^[a-zA-Z0-9]{0,30}$";
+        String PATTERN = "^[a-zA-Z]{0,30}$";
         Pattern patt = Pattern.compile(PATTERN);
         Matcher match = patt.matcher(lastNameTextField.getText());
         if (!match.matches()) {
@@ -370,7 +385,7 @@ public class FormPanel extends javax.swing.JPanel {
 
     private void firstNameTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_firstNameTextFieldKeyReleased
         // TODO add your handling code here:
-        String PATTERN = "^[a-zA-Z0-9]{0,30}$";
+        String PATTERN = "^[a-zA-Z]{0,30}$";
         Pattern patt = Pattern.compile(PATTERN);
         Matcher match = patt.matcher(firstNameTextField.getText());
         if (!match.matches()) {
@@ -437,15 +452,30 @@ public class FormPanel extends javax.swing.JPanel {
         newUser.setLastname(lastNameTextField.getText());
         newUser.setAge(ageTextField.getText());
         newUser.setEmail(emailIdTextField.getText());
-        newUser.setGender(genderGroup.getSelection().getActionCommand());
+
+        java.util.Date date = jDateChooser1.getDate();
+        String strDate = DateFormat.getDateInstance().format(date);
+        newUser.setDob(strDate);
+
         newUser.setType(typeComboBox.getSelectedItem().toString());
         newUser.setMessage(messageTextField.getText());
-        
+        newUser.setPath(selectedImagePath);
+        newUser.setType(typeComboBox.getSelectedItem().toString());
+
+//        newUser.setfilename(filename);
+        if (maleRadioB.isSelected() == true) {
+            newUser.setGender("Male");
+        } else if (femaleRadioB.isSelected() == true) {
+            newUser.setGender("Female");
+        } else {
+            newUser.setGender("Prefer not to say");
+        }
+
         ViewPanel newViewPanel = new ViewPanel(newUser);
         bottomPanel.add(newViewPanel);
         CardLayout layout = (CardLayout) bottomPanel.getLayout();
         layout.next(bottomPanel);
-        
+
         //String firstname = firstNameTextField.getText();
         //String lastname = lastNameTextField.getText();
         //String age = ageTextField.getText();
@@ -453,7 +483,6 @@ public class FormPanel extends javax.swing.JPanel {
         //String gender = genderGroup.getSelection().getActionCommand();
         //String type = typeComboBox.getSelectedItem().toString();
         //String message = messageTextField.getText(); 
-
 //        if (firstname.equals("")) {
 //            JOptionPane.showMessageDialog(null, "First name is required");
 //        }
@@ -469,14 +498,12 @@ public class FormPanel extends javax.swing.JPanel {
 //        if (message.equals("")) {
 //            JOptionPane.showMessageDialog(null, "Message is required");
 //        }
-
         //JOptionPane.showMessageDialog(this, firstname + "\n" + lastname + "\n" + age + "\n" + email + "\n" + gender + "\n" + type + "\n" + message, "User Details", HEIGHT);
-
         //System.out.println(firstname + " " + lastname + " " + age + " " + email + " " + gender + " " + type + " " + message);
     }//GEN-LAST:event_submitButtonActionPerformed
 
     private void browseImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseImageButtonActionPerformed
-        // TODO add your handling code here:
+//        // TODO add your handling code here:
         JFileChooser browseImageFile = new JFileChooser();
         //Filter image extensions
         FileNameExtensionFilter fnef = new FileNameExtensionFilter("IMAGES", "png", "jpg", "jpeg");
@@ -485,23 +512,35 @@ public class FormPanel extends javax.swing.JPanel {
 
         if (showOpenDialogue == JFileChooser.APPROVE_OPTION) {
             File selectedImageFile = browseImageFile.getSelectedFile();
-            String selectedImagePath = selectedImageFile.getAbsolutePath();
-            JOptionPane.showMessageDialog(null, selectedImagePath);
+            selectedImagePath = selectedImageFile.getAbsolutePath();
             //Display image on jlable
-            ImageIcon ii = new ImageIcon(selectedImagePath);
-            //Resize image to fit jlabel
-            Image image = ii.getImage().getScaledInstance(imageLabel.getWidth(), imageLabel.getHeight(), Image.SCALE_SMOOTH);
-
-            imageLabel.setIcon(new ImageIcon(image));
+//            BufferedImage image = null;
+//            try {
+//                image = ImageIO.read(selectedImageFile);
+//            } catch (IOException ex) {
+//                Logger.getLogger(FormPanel.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//            int maxWidth = 800; // Define your maximum width
+//            int maxHeight = 600; // Define your maximum height
+//            int imageWidth = image.getWidth();
+//            int imageHeight = image.getHeight();
+//            if (imageWidth > maxWidth || imageHeight > maxHeight) {
+//                JOptionPane.showMessageDialog(null, "Image dimensions exceed the allowed size (800x600).");
+//                // Handle the oversized image as needed, e.g., do not display it.
+//            } else {
+//                // Display the image on a JLabel or perform other actions with the image.
+//            }
         }
     }//GEN-LAST:event_browseImageButtonActionPerformed
 
-private javax.swing.ButtonGroup genderGroup;
+//private javax.swing.ButtonGroup genderGroup;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel agLable;
     private javax.swing.JLabel ageLabel;
     private javax.swing.JTextField ageTextField;
     private javax.swing.JButton browseImageButton;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JLabel dobLable;
     private javax.swing.JLabel eLabel;
     private javax.swing.JLabel eLabel1;
     private javax.swing.JLabel emaiIdlLabel;
@@ -512,6 +551,7 @@ private javax.swing.ButtonGroup genderGroup;
     private javax.swing.JTextField firstNameTextField;
     private javax.swing.JLabel genderLabel;
     private javax.swing.JLabel imageLabel;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lLabel;
@@ -526,4 +566,5 @@ private javax.swing.ButtonGroup genderGroup;
     private javax.swing.JComboBox<String> typeComboBox;
     private javax.swing.JLabel uploadImageLabel;
     // End of variables declaration//GEN-END:variables
+    String selectedImagePath;
 }
